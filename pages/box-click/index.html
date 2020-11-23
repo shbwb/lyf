@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE> BOX </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <META NAME="Author" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+ </HEAD>
+ <BODY>
+  <h2>BOX</h2>
+  <table width="400" height="270" border="0" cellpadding="0" cellspacing="1">
+    <tr align="center">
+      <td bgcolor="#0099FF" width="25%" id="0-0" onclick="ct(this)">A</td>
+      <td bgcolor="#0099FF" width="25%" id="0-1" onclick="ct(this)">B</td>
+      <td bgcolor="#0099FF" width="25%" id="0-2" onclick="ct(this)">C</td>
+      <td bgcolor="#0099FF" width="25%" id="0-3" onclick="ct(this)">D</td>
+    </tr>
+   <tr align="center" width="90">
+      <td bgcolor="#0099FF" width="25%" id="1-0" onclick="ct(this)">E</td>
+      <td bgcolor="#0099FF" width="25%" id="1-1" onclick="ct(this)">F</td>
+      <td bgcolor="#0099FF" width="25%" id="1-2" onclick="ct(this)">G</td>
+      <td bgcolor="#0099FF" width="25%" id="1-3" onclick="ct(this)">H</td>
+    </tr>
+    <tr align="center" width="90">
+      <td bgcolor="#0099FF" width="25%" id="2-0" onclick="ct(this)">I</td>
+      <td bgcolor="#0099FF" width="25%" id="2-1" onclick="ct(this)">J</td>
+      <td bgcolor="#0099FF" width="25%" id="2-2" onclick="ct(this)">Q</td>
+      <td bgcolor="#FF9999" id="2-3" onclick="resetBox()"> </td>
+    </tr>
+ </table>
+ <h2 id="mm"></h2>
+ <h2 id="gg"></h2>
+ </BODY>
+</HTML>
+<script type="text/javascript"> 
+ function $(element){return document.getElementById(element);}
+ 
+ var count = 0;//总次数
+ var list = [];
+ var box = [
+  [1, 1, 1, 1],
+  [1, 1, 1, 1],
+  [1, 1, 1, 0],
+ ];
+ var maxX = 2; //最大行
+ var maxY = 3; //最大列
+ 
+ var offsets = [
+  [-1, 0],[1, 0],[0, -1],[0, 1]
+ ];
+ 
+ function on_board(p){
+  return ( (p[0] >= 0) && (p[0] <= maxX) && (p[1] >= 0) && (p[1] <= maxY) )?true:false;
+ }
+ function check(){
+  var m = 0;
+  for(var i=0; i<3; i++){
+   for(var j=0; j<4; j++){
+    m += box[i][j];
+   }
+  }
+  if(-11 == m)return true;
+  return false;
+ }
+ function ct(o){
+  var p = o.id.split('-');
+  //#33CC99
+  if(1 == box[p[0]][p[1]]){ //可操作
+   box[p[0]][p[1]] = 0;
+   $(p[0] + '-' + p[1]).bgColor = '#33CC99';
+   
+   //处理临点
+   for(var i=0; i<4; i++){
+    var np = [parseInt(p[0]) + offsets[i][0], parseInt(p[1]) + offsets[i][1]];
+    if(on_board(np) && (np[0] + np[1] < 5)){
+     if(1 == box[np[0]][np[1]]){
+      box[np[0]][np[1]] = -1;
+      $(np[0] + '-' + np[1]).bgColor = '#33CC99';
+     }else{
+      box[np[0]][np[1]] = 1;
+      $(np[0] + '-' + np[1]).bgColor = '#0099FF';
+     }
+    }
+   }
+   
+   list.push(o.innerHTML);
+   count++;
+   if(check()){
+    $('mm').innerHTML = '恭喜过关，总次数：' + count;
+    $('gg').innerHTML = list;
+    return;
+   }
+   
+   $('mm').innerHTML = '尝试次数：' + count;
+   $('gg').innerHTML = list;
+  }  
+ }
+ function resetBox(){
+  for(var i=0; i<3; i++){
+   for(var j=0; j<4; j++){
+    box[i][j] = 1;
+    $(i + '-' + j).bgColor = '#0099FF';
+   }
+  }
+  box[2][3] = 0;
+  $(2 + '-' + 3).bgColor = '#FF9999';
+  
+  list = [];
+  $('mm').innerHTML = '';
+  $('gg').innerHTML = '';
+ }
+</script>
