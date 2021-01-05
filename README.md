@@ -1,2 +1,2 @@
 # lyf
-Not only a personal page, but also a bwb demo
+Not only a personal page but also a bwb demo
