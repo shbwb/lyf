@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>历程</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://bwb.js.org/start/build.css" rel="stylesheet">
+<script src="https://bwb.js.org/start/build.js"></script>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+/* idea from csdn.net */
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+       
+var a = new Array("梁倚帆！","老班长！");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+}); 
+</script>
+</head>
+<body>
+<div class="header">
+  <h1>庆祝</h1>
+</div>
+<div class="sticky">
+  <div class="navbar-theme-dark">
+    <a href="/">首页</a>
+  </div>
+</div>
+<div class="container">
+
+  <br><hr>
+    <p class="text-center"><small>Copyright (c) 2020 qbsz(shbwb,lyf)</small></p><br>
+</div>
+</body>
+</html>
